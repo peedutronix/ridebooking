@@ -50,7 +50,7 @@ export default function BookingPage() {
       <div className="w-full max-w-lg p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div>
           <h1 className="text-2xl font-bold text-center">Schedule Your Recurring Ride</h1>
-          <p className="text-center text-gray-500">Fill in the details once, and we'll handle the rest.</p>
+          <p className="text-center text-gray-500">Fill in the details once, and we ll handle the rest.</p>
         </div>
         
         <form className="space-y-6" onSubmit={handleSubmit}>
