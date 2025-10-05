@@ -3,18 +3,18 @@ export default function BookingPage() {
   const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-gray-100">
+    <main className="flex items-center justify-center min-h-screen bg-gray-100 py-12">
       <div className="w-full max-w-lg p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div>
           <h1 className="text-2xl font-bold text-center">
             Schedule Your Recurring Ride
           </h1>
           <p className="text-center text-gray-500">
-            Fill in the details once, and we handle the rest.
+            Fill in the details once, and we ll handle the rest.
           </p>
         </div>
         
-        <form className="space-y-4">
+        <form className="space-y-6">
           {/* Location Fields */}
           <div>
             <label htmlFor="pickup" className="block text-sm font-medium text-gray-700">
@@ -43,8 +43,6 @@ export default function BookingPage() {
               required
             />
           </div>
-
-          {/* === NEW CODE STARTS HERE === */}
 
           {/* Pickup Time */}
           <div>
@@ -82,16 +80,44 @@ export default function BookingPage() {
               ))}
             </div>
           </div>
+          
+          {/* === NEW CODE STARTS HERE === */}
 
+          {/* Date Range */}
+          <div className="flex items-center space-x-4">
+            <div className="w-1/2">
+              <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
+                Start Date
+              </label>
+              <input
+                type="date"
+                id="startDate"
+                name="startDate"
+                className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+            <div className="w-1/2">
+              <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
+                End Date
+              </label>
+              <input
+                type="date"
+                id="endDate"
+                name="endDate"
+                className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+          </div>
+          
           {/* === NEW CODE ENDS HERE === */}
-
-          {/* Date fields will go here next */}
 
           <button
             type="submit"
             className="w-full px-4 py-2 font-bold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            Next Step
+            Review & Confirm Booking
           </button>
         </form>
       </div>
