@@ -1,4 +1,12 @@
+'use client'; // This marks the component as a Client Component
+
+import { useState } from 'react'; // We must import the useState hook from React
+
 export default function BookingPage() {
+  // Here is our first state variable!
+  // It holds the value of the pickup location input.
+  const [pickupLocation, setPickupLocation] = useState('');
+
   // An array to make creating checkboxes easier to manage
   const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -27,99 +35,49 @@ export default function BookingPage() {
               className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               placeholder="e.g., Kalanki, Kathmandu"
               required
+              // These two lines connect the input to our state
+              value={pickupLocation} 
+              onChange={(e) => setPickupLocation(e.target.value)}
             />
           </div>
           
+          {/* --- The rest of the form fields remain the same for now --- */}
           <div>
             <label htmlFor="dropoff" className="block text-sm font-medium text-gray-700">
               Drop-off Location
             </label>
-            <input
-              type="text"
-              id="dropoff"
-              name="dropoff"
-              className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder="e.g., Thamel, Kathmandu"
-              required
-            />
+            <input type="text" id="dropoff" name="dropoff" className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Thamel, Kathmandu" required />
           </div>
-
-          {/* Pickup Time */}
           <div>
             <label htmlFor="pickupTime" className="block text-sm font-medium text-gray-700">
               Pickup Time
             </label>
-            <input
-              type="time"
-              id="pickupTime"
-              name="pickupTime"
-              className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
+            <input type="time" id="pickupTime" name="pickupTime" className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required />
           </div>
-
-          {/* Days of the Week */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Days of the Week
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Days of the Week</label>
             <div className="flex flex-wrap justify-between mt-2">
-              {daysOfWeek.map((day) => (
-                <div key={day} className="flex items-center">
-                  <input
-                    id={day}
-                    name="days"
-                    type="checkbox"
-                    value={day}
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <label htmlFor={day} className="ml-2 text-sm text-gray-900">
-                    {day}
-                  </label>
-                </div>
-              ))}
+              {daysOfWeek.map((day) => (<div key={day} className="flex items-center"><input id={day} name="days" type="checkbox" value={day} className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" /><label htmlFor={day} className="ml-2 text-sm text-gray-900">{day}</label></div>))}
             </div>
           </div>
-          
-          {/* === NEW CODE STARTS HERE === */}
-
-          {/* Date Range */}
           <div className="flex items-center space-x-4">
             <div className="w-1/2">
-              <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
-                Start Date
-              </label>
-              <input
-                type="date"
-                id="startDate"
-                name="startDate"
-                className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
+              <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date</label>
+              <input type="date" id="startDate" name="startDate" className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required />
             </div>
             <div className="w-1/2">
-              <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
-                End Date
-              </label>
-              <input
-                type="date"
-                id="endDate"
-                name="endDate"
-                className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
+              <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date</label>
+              <input type="date" id="endDate" name="endDate" className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required />
             </div>
           </div>
-          
-          {/* === NEW CODE ENDS HERE === */}
-
-          <button
-            type="submit"
-            className="w-full px-4 py-2 font-bold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Review & Confirm Booking
-          </button>
+          <button type="submit" className="w-full px-4 py-2 font-bold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Review & Confirm Booking</button>
         </form>
+
+        {/* This is a temporary box to show you the state value changing live */}
+        <div className="mt-6 p-4 bg-gray-100 rounded-md border">
+          <h3 className="font-bold">Live State Value (For Debugging):</h3>
+          <p>Pickup Location: <span className="font-mono text-blue-600">{pickupLocation}</span></p>
+        </div>
       </div>
     </main>
   );
