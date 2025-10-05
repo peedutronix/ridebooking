@@ -1,4 +1,7 @@
 export default function BookingPage() {
+  // An array to make creating checkboxes easier to manage
+  const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-lg p-8 space-y-6 bg-white rounded-lg shadow-md">
@@ -7,7 +10,7 @@ export default function BookingPage() {
             Schedule Your Recurring Ride
           </h1>
           <p className="text-center text-gray-500">
-            Fill in the details once, and we handle the rest.
+            Fill in the details once, and we'll handle the rest.
           </p>
         </div>
         
@@ -41,7 +44,48 @@ export default function BookingPage() {
             />
           </div>
 
-          {/* Time, Day, and Date fields will go here */}
+          {/* === NEW CODE STARTS HERE === */}
+
+          {/* Pickup Time */}
+          <div>
+            <label htmlFor="pickupTime" className="block text-sm font-medium text-gray-700">
+              Pickup Time
+            </label>
+            <input
+              type="time"
+              id="pickupTime"
+              name="pickupTime"
+              className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+
+          {/* Days of the Week */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Days of the Week
+            </label>
+            <div className="flex flex-wrap justify-between mt-2">
+              {daysOfWeek.map((day) => (
+                <div key={day} className="flex items-center">
+                  <input
+                    id={day}
+                    name="days"
+                    type="checkbox"
+                    value={day}
+                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <label htmlFor={day} className="ml-2 text-sm text-gray-900">
+                    {day}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* === NEW CODE ENDS HERE === */}
+
+          {/* Date fields will go here next */}
 
           <button
             type="submit"
