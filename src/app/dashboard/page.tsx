@@ -5,16 +5,17 @@ import clientPromise from "../api/lib/mongodb";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
 
-// Define a type for our booking data, including the 'days' object
+// Ensure the Booking type includes pickupTime
 type Booking = {
   _id: ObjectId;
   pickupLocation: string;
   dropoffLocation: string;
+  pickupTime: string; // Make sure this is included
   startDate: string;
   endDate: string;
   userEmail: string;
   submittedAt: string;
-  days: { [key: string]: boolean }; // Add the days object here
+  days: { [key: string]: boolean };
 };
 
 async function getUserBookings(email: string): Promise<Booking[]> {
@@ -56,18 +57,17 @@ export default async function DashboardPage() {
           {bookings.length > 0 ? (
             <ul className="space-y-4">
               {bookings.map((booking) => {
-                // === NEW LOGIC TO PROCESS THE DAYS OBJECT ===
                 const selectedDays = Object.entries(booking.days)
                   .filter(([day, isSelected]) => isSelected)
                   .map(([day]) => day)
                   .join(', ');
-                // === END OF NEW LOGIC ===
 
                 return (
                   <li key={booking._id.toString()} className="p-4 border rounded-lg shadow-sm bg-white">
                     <div className="font-bold text-lg">{booking.pickupLocation} → {booking.dropoffLocation}</div>
+                    {/* === THE FINAL ADDITION === */}
+                    <p className="text-sm text-gray-600"><strong>Time:</strong> {booking.pickupTime}</p>
                     <p className="text-sm text-gray-600"><strong>Dates:</strong> {booking.startDate} to {booking.endDate}</p>
-                    {/* === NEW LINE TO DISPLAY THE DAYS === */}
                     <p className="text-sm text-gray-600"><strong>On:</strong> {selectedDays || 'No days selected'}</p>
                   </li>
                 );
