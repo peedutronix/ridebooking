@@ -10,7 +10,7 @@ export default function BookingPage() {
             Schedule Your Recurring Ride
           </h1>
           <p className="text-center text-gray-500">
-            Fill in the details once, and we'll handle the rest.
+            Fill in the details once, and we handle the rest.
           </p>
         </div>
         
