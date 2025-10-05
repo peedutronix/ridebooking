@@ -1,6 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+// We import FormEvent, which is the type for a form submission event
+import { useState, FormEvent } from 'react';
+
+// We create a custom "type" to describe the exact shape of our days state object
+type DaysState = {
+  Mon: boolean; Tue: boolean; Wed: boolean; Thu: false; Fri: boolean; Sat: boolean; Sun: boolean;
+};
 
 export default function BookingPage() {
   const [pickupLocation, setPickupLocation] = useState('');
@@ -8,23 +14,23 @@ export default function BookingPage() {
   const [pickupTime, setPickupTime] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [days, setDays] = useState({
+  
+  // We tell useState that our 'days' state must conform to our new DaysState type
+  const [days, setDays] = useState<DaysState>({
     Mon: false, Tue: false, Wed: false, Thu: false, Fri: false, Sat: false, Sun: false,
   });
 
-  const handleDayChange = (day) => {
+  // We specify that 'day' must be one of the keys from our DaysState type
+  const handleDayChange = (day: keyof DaysState) => {
     setDays(prevDays => ({
       ...prevDays,
       [day]: !prevDays[day],
     }));
   };
 
-  // === NEW FUNCTION STARTS HERE ===
-  const handleSubmit = (event) => {
-    // 1. Prevent the browser from refreshing the page
+  // We tell handleSubmit that its 'event' parameter is of type FormEvent
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-
-    // 2. Gather all state data into a single object
     const bookingData = {
       pickupLocation,
       dropoffLocation,
@@ -33,24 +39,20 @@ export default function BookingPage() {
       startDate,
       endDate,
     };
-
-    // 3. Log the data to the developer console!
     console.log('Form Submitted Data:', bookingData);
     alert('Success! Check the developer console for the form data. (Press F12 or right-click -> Inspect)');
   };
-  // === NEW FUNCTION ENDS HERE ===
 
-  const dayKeys = Object.keys(days);
+  const dayKeys = Object.keys(days) as Array<keyof DaysState>;
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-100 py-12">
       <div className="w-full max-w-lg p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div>
           <h1 className="text-2xl font-bold text-center">Schedule Your Recurring Ride</h1>
-          <p className="text-center text-gray-500">Fill in the details once, and we ll handle the rest.</p>
+          <p className="text-center text-gray-500">Fill in the details once, and we'll handle the rest.</p>
         </div>
         
-        {/* We connect our new function to the form's onSubmit event */}
         <form className="space-y-6" onSubmit={handleSubmit}>
           {/* All the input fields are the same as before */}
           <div>
