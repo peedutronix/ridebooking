@@ -58,7 +58,7 @@ export default async function DashboardPage() {
             <ul className="space-y-4">
               {bookings.map((booking) => {
                 const selectedDays = Object.entries(booking.days)
-                  .filter(([day, isSelected]) => isSelected)
+                  .filter(([, isSelected]) => isSelected)
                   .map(([day]) => day)
                   .join(', ');
 
