@@ -30,6 +30,7 @@ export async function POST(request: Request) {
       email,
       password: hashedPassword, // Store the hashed password, NOT the original
       createdAt: new Date(),
+   role: 'PASSENGER', // <-- ADD THIS LINE
     });
 
     return NextResponse.json({ message: 'User created successfully.' }, { status: 201 });

@@ -15,48 +15,37 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
-          return null;
-        }
+        if (!credentials?.email || !credentials.password) return null;
+
         const client = await clientPromise;
         const db = client.db("ridebooking");
         const user = await db.collection("users").findOne({ email: credentials.email });
 
-        if (!user || !user.password) {
-          return null;
-        }
+        if (!user || !user.password) return null;
 
         const passwordsMatch = await bcrypt.compare(credentials.password, user.password);
-        if (!passwordsMatch) {
-          return null;
-        }
+        if (!passwordsMatch) return null;
         
-        // Return the user object if everything is valid
-        return { id: user._id.toString(), name: user.name, email: user.email };
+        // Return the full user object including the role
+        return { id: user._id.toString(), name: user.name, email: user.email, role: user.role };
       }
     })
   ],
-  
-  // === THIS IS THE NEW, CRITICAL PART ===
   session: {
     strategy: "jwt",
   },
   callbacks: {
+    // Include user.role on the JWT
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-      }
+      if (user) token.role = (user as any).role;
       return token;
     },
+    // Include user.role on the session object
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-      }
+      if (session?.user) session.user.role = token.role;
       return session;
     },
   },
-  // === END OF NEW PART ===
-  
   secret: process.env.AUTH_SECRET,
 };
 
