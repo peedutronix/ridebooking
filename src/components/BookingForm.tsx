@@ -47,7 +47,8 @@ export default function BookingForm({ user }: BookingFormProps) {
       });
       if (!response.ok) throw new Error('Network response was not ok');
       setSuccessMessage('Booking confirmed! Your ride is scheduled.');
-    } catch (err: any) {
+    } catch (err: unknown) {
+      console.error('Booking submission error:', err);
       setError('Failed to submit booking. Please try again.');
     } finally {
       setIsSubmitting(false);
