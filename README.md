@@ -20,6 +20,16 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Setup
+
+1. Create a `.env.local` file in the root directory
+2. Add your MongoDB connection string:
+   ```
+   MONGODB_URI=your_mongodb_connection_string_here
+   AUTH_SECRET=your_random_secret_key_here
+   ```
+3. Generate an AUTH_SECRET by running: `openssl rand -base64 32` (or use any random string generator)
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

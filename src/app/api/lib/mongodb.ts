@@ -1,15 +1,16 @@
 import { MongoClient } from 'mongodb';
 
+const uri: string = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+
 if (!process.env.MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  console.warn('Warning: MONGODB_URI not set. Using default connection string.');
 }
 
-const uri: string = process.env.MONGODB_URI;
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
 declare global {
-  var _mongoClientPromise: Promise<MongoClient>;
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
 if (process.env.NODE_ENV === 'development') {
