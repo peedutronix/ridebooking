@@ -6,7 +6,7 @@ import { ObjectId } from 'mongodb';
 
 export async function POST(
   request: Request,
-  { params }: { params: { bookingId: string } }
+  { params }: { params: Promise<{ bookingId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -16,7 +16,7 @@ export async function POST(
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const { bookingId } = params; // Get the specific booking ID from the URL
+    const { bookingId } = await params; // Get the specific booking ID from the URL
 
     const client = await clientPromise;
     const db = client.db('ridebooking');
