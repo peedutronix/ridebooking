@@ -12,7 +12,7 @@ export async function POST(
     const session = await getServerSession(authOptions);
 
     // 1. Security Check: Ensure a user is logged in and has the 'RIDER' role.
-    if (!session || !session.user || (session.user as any).role !== 'RIDER') {
+    if (!session || !session.user || session.user.role !== 'RIDER') {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
@@ -28,7 +28,7 @@ export async function POST(
       // Set the new fields to claim the job
       { 
         $set: { 
-          riderId: (session.user as any).id, // Get the rider's ID from their session
+          riderId: session.user.id, // Get the rider's ID from their session
           riderEmail: session.user.email,
           status: 'accepted',
           acceptedAt: new Date(),

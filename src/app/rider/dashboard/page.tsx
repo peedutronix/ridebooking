@@ -3,10 +3,9 @@ import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import clientPromise from "../../api/lib/mongodb";
 import JobList from "../../../components/JobList"; // Import our new client component
-import { ObjectId } from "mongodb";
 
 type Booking = {
-  _id: ObjectId;
+  _id: string;
   pickupLocation: string;
   dropoffLocation: string;
   userEmail: string;
@@ -31,7 +30,7 @@ async function getAvailableBookings(): Promise<Booking[]> {
 export default async function RiderDashboard() {
   const session = await getServerSession(authOptions);
 
-  if (!session || !session.user || (session.user as any).role !== 'RIDER') {
+  if (!session || !session.user || session.user.role !== 'RIDER') {
     redirect("/api/auth/signin?callbackUrl=/rider/dashboard");
   }
 

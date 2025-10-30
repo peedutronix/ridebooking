@@ -35,8 +35,8 @@ export default function JobList({ initialBookings }: { initialBookings: Booking[
         currentBookings.filter(booking => booking._id !== bookingId)
       );
 
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
     } finally {
       setLoadingId(null);
     }

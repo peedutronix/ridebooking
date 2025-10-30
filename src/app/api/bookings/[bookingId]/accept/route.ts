@@ -11,7 +11,7 @@ export async function POST(
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session || !session.user || (session.user as any).role !== 'RIDER') {
+    if (!session || !session.user || session.user.role !== 'RIDER') {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
@@ -27,7 +27,7 @@ export async function POST(
       { _id: new ObjectId(bookingId), riderId: { $exists: false } },
       { 
         $set: { 
-          riderId: (session.user as any).id,
+          riderId: session.user.id,
           riderEmail: session.user.email,
           status: 'accepted',
           acceptedAt: new Date(),
